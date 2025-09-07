@@ -39,8 +39,8 @@ public class CopyRangeTest {
         int[] arr4 = {6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
         assertTrue(ArrayUtilities.copyRange(arr3, 0, arr4, 4, 6),
                 "Does not return true when range successfully copied");
-        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5}, arr1, "Source array should not be modified");
-        assertArrayEquals(new int[]{6, 7, 8, 9, 0, 1, 2, 3, 4, 5}, arr2, "Destination array incorrect");
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5}, arr3, "Source array should not be modified");
+        assertArrayEquals(new int[]{6, 7, 8, 9, 0, 1, 2, 3, 4, 5}, arr4, "Destination array incorrect");
     }
 
     @DisplayName("WHEN a range of length n is from the source array is copied to a destination array of length n, THEN the destination array is correctly modified AND returns true")
@@ -71,11 +71,11 @@ public class CopyRangeTest {
 
         int[] arr3 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
         int[] arr4 = {10, 11, 12, 13, 14};
-        assertTrue(ArrayUtilities.copyRange(arr1, -1, arr2, -1, 0),
+        assertTrue(ArrayUtilities.copyRange(arr3, -1, arr4, -1, 0),
                 "Does not return true when range successfully copied");
-        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8}, arr1,
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8}, arr3,
                 "Source array should not be modified");
-        assertArrayEquals(new int[]{10, 11, 12, 13, 14}, arr2,
+        assertArrayEquals(new int[]{10, 11, 12, 13, 14}, arr4,
                 "Destination array should not be modified");
     }
 

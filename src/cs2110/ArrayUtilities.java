@@ -54,6 +54,11 @@ public class ArrayUtilities {
         assert (dst != null);
         assert (src.length > 0);
         assert (dst.length > 0);
+        //If length = 0, then we don't need to even access any arrays and nothing happens,
+        //so just return true automatically
+        if (length == 0) {
+            return true;
+        }
         //Case of false: All conditions that could trigger an output of false
         if (length < 0 || srcStart < 0 || dstStart < 0 || dstStart + length > dst.length
                 || srcStart + length > src.length) {
