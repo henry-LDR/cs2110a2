@@ -40,7 +40,17 @@ public class CopyRangeTest {
         assertTrue(ArrayUtilities.copyRange(arr3, 0, arr4, 4, 6),
                 "Does not return true when range successfully copied");
         assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5}, arr3, "Source array should not be modified");
-        assertArrayEquals(new int[]{6, 7, 8, 9, 0, 1, 2, 3, 4, 5}, arr4, "Destination array incorrect");
+        assertArrayEquals(new int[]{6, 7, 8, 9, 0, 1, 2, 3, 4, 5}, arr4,
+                "Destination array incorrect");
+
+        int[] arr5 = {0, 1, 2, 3, 4, 5};
+        int[] arr6 = {6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+        assertTrue(ArrayUtilities.copyRange(arr5, 5, arr6, 9, 1),
+                "Does not return true when range successfully copied");
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5}, arr5, "Source array should not be modified");
+        assertArrayEquals(new int[]{6, 7, 8, 9, 10, 11, 12, 13, 14, 5}, arr6,
+                "Destination array incorrect");
+
     }
 
     @DisplayName("WHEN a range of length n is from the source array is copied to a destination array of length n, THEN the destination array is correctly modified AND returns true")
@@ -104,7 +114,46 @@ public class CopyRangeTest {
         assertArrayEquals(new int[]{2, 3, 4, 5, 6, 5, 6, 7, 8}, arr5, "Range copied incorrectly");
         assertArrayEquals(new int[]{2, 3, 4, 5, 6, 5, 6, 7, 8}, arr6, "Range copied incorrectly");
 
+        int[] arr7 = {0, 1, 2, 3, 4};
+        assertTrue(ArrayUtilities.copyRange(arr7, 0, arr7, 1, 4), "Does not return true when range successfully copied");
+        assertArrayEquals(new int[]{0, 0, 1, 2, 3}, arr7, "Range copied incorrectly");
 
+        int[] arr8 = {0, 1, 2, 3, 4};
+        assertTrue(ArrayUtilities.copyRange(arr8, 1, arr8, 0, 4), "Does not return true when range successfully copied");
+        assertArrayEquals(new int[]{1, 2, 3, 4, 4}, arr8, "Range copied incorrectly");
+
+        int[] arr9 = {0, 1, 2, 3, 4};
+        assertTrue(ArrayUtilities.copyRange(arr9, 0, arr9, 0, 5), "Does not return true when range successfully copied");
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4}, arr9, "Range copied incorrectly");
+
+    }
+
+    @DisplayName("WHEN arrays with a single element are copied with valid inputs, THEN the copying happens AND returns true ")
+    @Test
+    void testValidArrayLengthOne() {
+        int[] arr1 = {0};
+        int[] arr2 = {1};
+        assertTrue(ArrayUtilities.copyRange(arr1, 0, arr2, 0, 1),
+                "Does not return true when range successfully copied");
+        assertArrayEquals(new int[]{0}, arr1,
+                "Source array should not be modified");
+        assertArrayEquals(new int[]{0}, arr2, "Destination array incorrect");
+    }
+
+    @DisplayName("WHEN arrays with a single element are copied with invalid inputs, THEN the arrays are not changed AND returns false ")
+    @Test
+    void testInvalidArrayLengthOne() {
+        int[] arr1 = {0};
+        int[] arr2 = {1};
+        assertFalse(ArrayUtilities.copyRange(arr1, 0, arr2, 0, -1),
+                "Does not return false when invalid inputs are provided");
+        assertFalse(ArrayUtilities.copyRange(arr1, 1, arr2, 0, 1),
+                "Does not return false when invalid inputs are provided");
+        assertFalse(ArrayUtilities.copyRange(arr1, 0, arr2, 1, 1),
+                "Does not return false when invalid inputs are provided");
+        assertArrayEquals(new int[]{0}, arr1,
+                "Source array should not be modified");
+        assertArrayEquals(new int[]{1}, arr2, "Destination array should not be modified");
     }
 
     @DisplayName("WHEN the provided range is invalid, THEN no array should be modified AND return false")
@@ -162,13 +211,36 @@ public class CopyRangeTest {
                 "Does not return false when start pos is negative");
         assertFalse(ArrayUtilities.copyRange(arr5, 0, arr6, -1, 2),
                 "Does not return false when start pos is negative");
+        assertFalse(ArrayUtilities.copyRange(arr5, 0, arr6, 5, 1),
+                "Does not return false when start pos invalid");
+        assertFalse(ArrayUtilities.copyRange(arr5, 11, arr6, 0, 1),
+                "Does not return false when start pos invalid");
         assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, arr5,
                 "Source array should not be modified");
         assertArrayEquals(new int[]{20, 21, 22, 23, 24}, arr6,
                 "Destination array should not be modified");
     }
 
-    void testInvalidRangeStartPos(){
-        //TODO when range and start position added are invalid, but individually are not invalid
+    @DisplayName("WHEN the start position and range together are invalid, THEN no array should be modified AND return false")
+    @Test
+    void testInvalidRangeStartPos() {
+        int[] arr1 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+        int[] arr2 = {20, 21, 22, 23, 24, 25, 26, 27};
+        assertFalse(ArrayUtilities.copyRange(arr1, 0, arr2, 3, 6),
+                "Does not return false when input is invalid");
+        assertFalse(ArrayUtilities.copyRange(arr1, 14, arr2, 0, 4),
+                "Does not return false when input is invalid");
+        assertFalse(ArrayUtilities.copyRange(arr1, 10, arr2, 6, 3),
+                "Does not return false when input is invalid");
+        assertFalse(ArrayUtilities.copyRange(arr1, 0, arr2, 1, 8),
+                "Does not return false when input is invalid");
+        assertFalse(ArrayUtilities.copyRange(arr1, -1, arr2, -1, -1),
+                "Does not return false when input is invalid");
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, arr1,
+                "Source array should not be modified");
+        assertArrayEquals(new int[]{20, 21, 22, 23, 24, 25, 26, 27}, arr2,
+                "Destination array should not be modified");
+
     }
+
 }
