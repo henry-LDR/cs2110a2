@@ -117,7 +117,7 @@ public class CopyRangeTest {
                 "Does not return false when range is invalid");
         assertFalse(ArrayUtilities.copyRange(arr2, 0, arr1, 0, 6),
                 "Does not return false when range is invalid");
-        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8}, arr1,
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, arr1,
                 "Source array should not be modified");
         assertArrayEquals(new int[]{20, 21, 22, 23, 24}, arr2,
                 "Destination array should not be modified");
@@ -136,9 +136,9 @@ public class CopyRangeTest {
         int[] arr6 = {20, 21, 22, 23, 24};
         assertFalse(ArrayUtilities.copyRange(arr5, 0, arr6, 0, -1),
                 "Does not return false when range is invalid");
-        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, arr1,
+        assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, arr5,
                 "Source array should not be modified");
-        assertArrayEquals(new int[]{20, 21, 22, 23, 24}, arr2,
+        assertArrayEquals(new int[]{20, 21, 22, 23, 24}, arr6,
                 "Destination array should not be modified");
     }
 
