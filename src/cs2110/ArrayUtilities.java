@@ -45,9 +45,6 @@ public class ArrayUtilities {
      * srcStart or 0 > dstStart. If length < 0, then also return false. Requires that src and dst
      * are not null, src.length > 0, and dst.length >0,
      */
-    // TODO 1: Write JavaDoc specifications for this method based on the description of its behavior
-    //  in the assignment handout. This documentation should include a list of all scenarios that
-    //  will cause the method to return `false`.
     static boolean copyRange(int[] src, int srcStart, int[] dst, int dstStart, int length) {
         //Check preconditions
         assert (src != null);
@@ -67,16 +64,12 @@ public class ArrayUtilities {
         //Otherwise, do the copying
         else {
             int[] range = copyOfRange(src, srcStart, srcStart + length);
-            //Loop invariant: dstStart+i <= dst.length
+            //Loop invariant: 0<= dstStart+i < dst.length
             for (int i = 0; i < range.length; i++) {
                 dst[dstStart + i] = range[i];
             }
             return true;
         }
-        // TODO 4: Complete the definition of this method. You may not call any methods outside of
-        //  the `ArrayUtilities` class, and you must document the invariants of any loop(s) with a
-        //  comment.
-
     }
 
     /**
