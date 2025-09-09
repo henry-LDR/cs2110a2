@@ -115,15 +115,18 @@ public class CopyRangeTest {
         assertArrayEquals(new int[]{2, 3, 4, 5, 6, 5, 6, 7, 8}, arr6, "Range copied incorrectly");
 
         int[] arr7 = {0, 1, 2, 3, 4};
-        assertTrue(ArrayUtilities.copyRange(arr7, 0, arr7, 1, 4), "Does not return true when range successfully copied");
+        assertTrue(ArrayUtilities.copyRange(arr7, 0, arr7, 1, 4),
+                "Does not return true when range successfully copied");
         assertArrayEquals(new int[]{0, 0, 1, 2, 3}, arr7, "Range copied incorrectly");
 
         int[] arr8 = {0, 1, 2, 3, 4};
-        assertTrue(ArrayUtilities.copyRange(arr8, 1, arr8, 0, 4), "Does not return true when range successfully copied");
+        assertTrue(ArrayUtilities.copyRange(arr8, 1, arr8, 0, 4),
+                "Does not return true when range successfully copied");
         assertArrayEquals(new int[]{1, 2, 3, 4, 4}, arr8, "Range copied incorrectly");
 
         int[] arr9 = {0, 1, 2, 3, 4};
-        assertTrue(ArrayUtilities.copyRange(arr9, 0, arr9, 0, 5), "Does not return true when range successfully copied");
+        assertTrue(ArrayUtilities.copyRange(arr9, 0, arr9, 0, 5),
+                "Does not return true when range successfully copied");
         assertArrayEquals(new int[]{0, 1, 2, 3, 4}, arr9, "Range copied incorrectly");
 
     }
@@ -243,4 +246,49 @@ public class CopyRangeTest {
 
     }
 
+    @DisplayName("WHEN either source or destination has length 0, THEN copying zero elements succeeds and returns true")
+    @Test
+    void testValidZeroLengthArrays() {
+        int[] emptySrc = {};
+        int[] nonEmptyDst = {1, 2, 3};
+        int[] emptyDst = {};
+        int[] nonEmptySrc = {4, 5, 6};
+
+        // Case 1: source is empty, destination is non-empty, length = 0
+        assertTrue(ArrayUtilities.copyRange(emptySrc, 0, nonEmptyDst, 0, 0),
+                "Copying zero elements from empty source should succeed");
+        assertArrayEquals(new int[]{1, 2, 3}, nonEmptyDst,
+                "Destination should not be modified when copying zero elements");
+
+        // Case 2: destination is empty, source is non-empty, length = 0
+        assertTrue(ArrayUtilities.copyRange(nonEmptySrc, 0, emptyDst, 0, 0),
+                "Copying zero elements into empty destination should succeed");
+
+        // Case 3: both source and destination are empty, length = 0
+        assertTrue(ArrayUtilities.copyRange(emptySrc, 0, emptyDst, 0, 0),
+                "Copying zero elements between two empty arrays should succeed");
+    }
+    @DisplayName("WHEN either source or destination has length 0, THEN copying nonzero number of elements fails and returns false")
+    @Test
+    void testInvalidZeroLengthArrays() {
+        int[] emptySrc = {};
+        int[] nonEmptyDst = {1, 2, 3};
+        int[] emptyDst = {};
+        int[] nonEmptySrc = {4, 5, 6};
+
+        // Case 1: source is empty, destination is non-empty, length = 0
+        assertFalse(ArrayUtilities.copyRange(emptySrc, 0, nonEmptyDst, 0, 1),
+                "Copying nonzero elements from empty source should return false");
+        assertArrayEquals(new int[]{1, 2, 3}, nonEmptyDst,
+                "Destination should not be modified");
+
+        // Case 2: destination is empty, source is non-empty, length = 0
+        assertFalse(ArrayUtilities.copyRange(nonEmptySrc, 0, emptyDst, 0, 1),
+                "Copying nonzero elements into empty destination should return false");
+
+        // Case 3: both source and destination are empty, length = 0
+        assertFalse(ArrayUtilities.copyRange(emptySrc, 0, emptyDst, 0, 5),
+                "Copying nonzero elements between two empty arrays should fail and return false");
+    }
 }
+
