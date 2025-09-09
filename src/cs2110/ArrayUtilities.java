@@ -30,6 +30,7 @@ public class ArrayUtilities {
     }
 
     /**
+     * //TODO should also describe preconditions?
      *
      * @param src:      The array containing the value to be copied
      * @param srcStart: The index of the first element to copy
@@ -73,6 +74,8 @@ public class ArrayUtilities {
     }
 
     /**
+     * //TODO preconditions?
+     *
      * @param src:    The 2D array containing the array to be copied
      * @param srcI:   The first "outer array" index of the range to copy
      * @param srcJ:   The first "inner array" index of the range to copy
@@ -84,7 +87,9 @@ public class ArrayUtilities {
      * @param height: The number of "outer array" indices over which the copied range spans
      * @param width:  The number of "inner array" indices over which the copied range spans
      * @return True if the inputs are valid, and will then also copy over src array elements into
-     * dst array. False if
+     * dst array. True if height AND width == 0. False if height, width, srcI, srcJ, dstI, or dstJ
+     * are negative, or if srcI+height>src.length, srcJ+width > src[i].length (for each i),
+     * dstI+height>dst.length, dstJ+width>dst[i].length (for each i).
      */
     // TODO 6a: Write JavaDoc specifications for this method based on the description of its behavior
     //  in the assignment handout.
@@ -107,6 +112,42 @@ public class ArrayUtilities {
         // TODO 6b: Complete the definition of this method. You may not call any methods outside of
         //  the `ArrayUtilities` class, and you must document the invariants of any loop(s) with a
         //  comment.
-        throw new UnsupportedOperationException();
+        assert (src != null);
+        assert (dst != null);
+        //If height and width both equal 0, then we don't need to even access any arrays and nothing happens,
+        //so just return true automatically
+        if (height == 0 || width == 0) {
+            return true;
+        }
+
+        //Case of false: All conditions that could trigger an output of false,
+        // except for when srcJ+width > src[i].length or dstJ+width>dst[i].length (for each i).
+        // This case is handled by calling the copyRange() method, which will return false
+        // if the array is too short
+        if (height < 0 || width < 0 || srcI < 0 || srcJ < 0 || dstI < 0 || dstJ < 0
+                || srcI + height > src.length
+                || dstI + height > dst.length) {
+            return false;
+        }
+
+        //copy range into a temporary 2D array
+        int[][] temp2DArray = new int[height][width];
+        for (int i = 0; i < height; i++) {
+            if(!copyRange(src[srcI+i], srcJ, temp2DArray[i], 0, width)){
+                return false;
+            }
+        }
+
+        //copy temporary range into dst array
+        for(int i = 0; i<height;i++){
+            if(!copyRange(temp2DArray[i], 0, dst[i+dstI], dstJ, width)){
+                return false;
+            }
+        }
+        return true;
+
+
     }
+
+
 }
