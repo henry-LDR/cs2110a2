@@ -7,9 +7,7 @@ package cs2110;
 public class ArrayUtilities {
 
     /**
-     * PRECONDITIONS
-     * - array is not null
-     * - start index <= end index
+     * PRECONDITIONS - array is not null - start index <= end index
      *
      * @param array: Array from which a copy of a range will be taken
      * @param start: Starting index of the range (inclusive)
@@ -34,8 +32,7 @@ public class ArrayUtilities {
 
     /**
      *
-     * PRECONDITIONS:
-     * -src and dst are not null
+     * PRECONDITIONS: -src and dst are not null
      *
      * @param src:      The array containing the value to be copied
      * @param srcStart: The index of the first element to copy
@@ -68,8 +65,11 @@ public class ArrayUtilities {
         //Otherwise, do the copying
         else {
             int[] range = copyOfRange(src, srcStart, srcStart + length);
-            //Loop invariant: for each k in range [0,i),
-            //dst[dstStart+k] == range[k]
+
+            /*
+            Loop invariant: for each k in range [0,i),
+            dst[dstStart+k] == range[k]
+            */
             for (int i = 0; i < range.length; i++) {
                 dst[dstStart + i] = range[i];
             }
@@ -79,9 +79,7 @@ public class ArrayUtilities {
 
     /**
      *
-     * PRECONDITIONS
-     * - src and dst are not null
-     * - arrays contained in src and dst are not null
+     * PRECONDITIONS - src and dst are not null - arrays contained in src and dst are not null
      *
      * @param src:    The 2D array containing the array to be copied
      * @param srcI:   The first "outer array" index of the range to copy
@@ -124,15 +122,25 @@ public class ArrayUtilities {
 
         //copy range into a temporary 2D array
         int[][] temp2DArray = new int[height][width];
+        /*
+        Loop invariant:
+        for each k in range [0,i),
+        temp2DArray[k][0...width-1] == src[srcI+k][srcJ...srcJ+width-1]
+         */
         for (int i = 0; i < height; i++) {
-            if(!copyRange(src[srcI+i], srcJ, temp2DArray[i], 0, width)){
+            if (!copyRange(src[srcI + i], srcJ, temp2DArray[i], 0, width)) {
                 return false;
             }
         }
 
         //copy temporary range into dst array
-        for(int i = 0; i<height;i++){
-            if(!copyRange(temp2DArray[i], 0, dst[i+dstI], dstJ, width)){
+        /*
+        Loop invariant:
+        for each k in range [0 , i),
+        dst[dstI + k][dstJ ... dstJ + width - 1] == temp2DArray[k][0 ... width - 1]
+         */
+        for (int i = 0; i < height; i++) {
+            if (!copyRange(temp2DArray[i], 0, dst[i + dstI], dstJ, width)) {
                 return false;
             }
         }
