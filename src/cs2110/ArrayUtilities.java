@@ -144,6 +144,7 @@ public class ArrayUtilities {
                 return false;
             }
         }
+        //if all array copy operations are performed successfully, return true
         return true;
 
 
