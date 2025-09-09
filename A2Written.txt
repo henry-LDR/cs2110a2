@@ -1,2 +1,17 @@
 1. How (if at all) did you use your unit tests as you were defining copyRange()?
-We used our unit tests to determine
+We treated the tests like a running spec. After each small change (such as a bug fix), we ran the suite.
+This allowed us to ensure that our method development stayed on the rails. We would use our unit tests
+to ensure that only the dst array and not the src array changed and that invalid inputs return false
+with no side effects.
+
+2. Did you define the method all at once and then debug with the tests,
+or did you break down your definition into multiple stages with intermittent testing?
+We defined the method all at once and then debugged with tests because the method was
+relatively straightforward to implement. As a result, we did not see the need to use the test cases
+in our initial prototype o
+
+3. Did you need to modify or add to your unit test suite as you were defining copyRange()?
+
+4. What aspects of your test-driven development process worked well?
+
+5. What aspects of your test-driven development process do you want to change?
