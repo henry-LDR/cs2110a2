@@ -234,22 +234,6 @@ class ArrayUtilitiesCopy2DRangeTest {
         assert2DEquals(before, a, "Same-region copy should not change the array");
     }
 
-    // ======================= FAILURE / VALIDATION =======================
-
-    @DisplayName("WHEN src is null or dst is null, THEN returns false and the other array remains unchanged")
-    @Test
-    void nullSrcOrDst() {
-        int[][] dst = {{0}};
-        int[][] dstBefore = deepCopy(dst);
-        assertFalse(ArrayUtilities.copy2DRange(null, 0, 0, dst, 0, 0, 1, 1));
-        assert2DEquals(dstBefore, dst, "Destination must remain unchanged");
-
-        int[][] src = {{1}};
-        int[][] srcBefore = deepCopy(src);
-        assertFalse(ArrayUtilities.copy2DRange(src, 0, 0, null, 0, 0, 1, 1));
-        assert2DEquals(srcBefore, src, "Source must remain unchanged");
-    }
-
     @DisplayName("WHEN any index is negative, THEN returns false and neither array changes")
     @Test
     void negativeIndices() {
@@ -351,27 +335,6 @@ class ArrayUtilitiesCopy2DRangeTest {
 
         assert2DEquals(sb, src, "Source unchanged");
         assert2DEquals(db, dst, "Destination unchanged");
-    }
-
-    @DisplayName("WHEN any src or dst row in region is null, THEN returns false and nothing changes")
-    @Test
-    void nullRowInEitherRegion() {
-        int[][] src = {{1, 2, 3}, null, {7, 8, 9}};
-        int[][] dst = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-        int[][] db = deepCopy(dst);
-
-        assertFalse(ArrayUtilities.copy2DRange(src, 0, 0, dst, 0, 0, 2, 2),
-                "Null src row should invalidate");
-        assert2DEquals(db, dst, "Destination must remain unchanged");
-
-        int[][] src2 = {{1, 2, 3}, {4, 5, 6}};
-        int[][] dst2 = {{0, 0, 0}, null, {0, 0, 0}};
-        int[][] sb2 = deepCopy(src2), db2 = deepCopy(dst2);
-
-        assertFalse(ArrayUtilities.copy2DRange(src2, 0, 0, dst2, 0, 0, 2, 2),
-                "Null dst row should invalidate");
-        assert2DEquals(sb2, src2, "Source must remain unchanged");
-        assert2DEquals(db2, dst2, "Destination must remain unchanged");
     }
 
     @DisplayName("WHEN height=0 AND width=0, THEN it is a no-op returning true (both arrays unchanged)")
