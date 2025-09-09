@@ -95,6 +95,20 @@ public class ArrayUtilities {
     //  in the assignment handout.
     static boolean copy2DRange(int[][] src, int srcI, int srcJ, int[][] dst, int dstI, int dstJ,
             int height, int width) {
+        //Check preconditions
+        assert (src != null);
+        assert (dst != null);
+        assert (src.length > 0);
+        assert (dst.length > 0);
+        //If the height or width is 0, return true automatically and don't do anything since this is always valid
+        //as we're doing nothing
+        if (height == 0 || width == 0) {
+            return true;
+        }
+        //Case of false:
+        if (height < 0 || width < 0 || srcI < 0 || srcJ < 0 || dstI < 0 || dstJ < 0) {
+            return false;
+        }
         // TODO 6b: Complete the definition of this method. You may not call any methods outside of
         //  the `ArrayUtilities` class, and you must document the invariants of any loop(s) with a
         //  comment.
