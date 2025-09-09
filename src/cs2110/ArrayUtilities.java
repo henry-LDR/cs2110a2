@@ -7,6 +7,9 @@ package cs2110;
 public class ArrayUtilities {
 
     /**
+     * PRECONDITIONS
+     * - array is not null
+     * - start index <= end index
      *
      * @param array: Array from which a copy of a range will be taken
      * @param start: Starting index of the range (inclusive)
