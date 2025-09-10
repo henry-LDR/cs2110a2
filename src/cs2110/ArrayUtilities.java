@@ -7,6 +7,7 @@ package cs2110;
 public class ArrayUtilities {
 
     /**
+     * PRECONDITIONS - array is not null - start index <= end index
      *
      * @param array: Array from which a copy of a range will be taken
      * @param start: Starting index of the range (inclusive)
@@ -30,7 +31,8 @@ public class ArrayUtilities {
     }
 
     /**
-     * //TODO should also describe preconditions?
+     *
+     * PRECONDITIONS: -src and dst are not null
      *
      * @param src:      The array containing the value to be copied
      * @param srcStart: The index of the first element to copy
@@ -43,15 +45,13 @@ public class ArrayUtilities {
      * specified range of values to be copied exceeds the size of the src or dst arrays, returns
      * false. That is, if dstStart + length > dst.length or srcStart + length > src.length. If the
      * starting point of the src or dst array is out of bounds, returns false. That is, if 0 >
-     * srcStart or 0 > dstStart. If length < 0, then also return false. Requires that src and dst
-     * are not null, src.length > 0, and dst.length >0,
+     * srcStart or 0 > dstStart. If length < 0, then also return false.
      */
     static boolean copyRange(int[] src, int srcStart, int[] dst, int dstStart, int length) {
         //Check preconditions
         assert (src != null);
         assert (dst != null);
-        assert (src.length > 0);
-        assert (dst.length > 0);
+
         //If length = 0, then we don't need to even access any arrays and nothing happens,
         //so just return true automatically
         if (length == 0) {
@@ -65,7 +65,11 @@ public class ArrayUtilities {
         //Otherwise, do the copying
         else {
             int[] range = copyOfRange(src, srcStart, srcStart + length);
-            //Loop invariant: 0<= dstStart+i < dst.length
+
+            /*
+            Loop invariant: for each k in range [0,i),
+            dst[dstStart+k] == range[k]
+            */
             for (int i = 0; i < range.length; i++) {
                 dst[dstStart + i] = range[i];
             }
@@ -74,7 +78,8 @@ public class ArrayUtilities {
     }
 
     /**
-     * //TODO preconditions?
+     *
+     * PRECONDITIONS - src and dst are not null - arrays contained in src and dst are not null
      *
      * @param src:    The 2D array containing the array to be copied
      * @param srcI:   The first "outer array" index of the range to copy
@@ -91,8 +96,7 @@ public class ArrayUtilities {
      * are negative, or if srcI+height>src.length, srcJ+width > src[i].length (for each i),
      * dstI+height>dst.length, dstJ+width>dst[i].length (for each i).
      */
-    // TODO 6a: Write JavaDoc specifications for this method based on the description of its behavior
-    //  in the assignment handout.
+
     static boolean copy2DRange(int[][] src, int srcI, int srcJ, int[][] dst, int dstI, int dstJ,
             int height, int width) {
         //Check preconditions
@@ -105,32 +109,24 @@ public class ArrayUtilities {
         if (height == 0 || width == 0) {
             return true;
         }
-        //Case of false:
-        if (height < 0 || width < 0 || srcI < 0 || srcJ < 0 || dstI < 0 || dstJ < 0) {
-            return false;
-        }
-        // TODO 6b: Complete the definition of this method. You may not call any methods outside of
-        //  the `ArrayUtilities` class, and you must document the invariants of any loop(s) with a
-        //  comment.
-        assert (src != null);
-        assert (dst != null);
-        //If height and width both equal 0, then we don't need to even access any arrays and nothing happens,
-        //so just return true automatically
-        if (height == 0 || width == 0) {
-            return true;
-        }
 
         //Case of false: All conditions that could trigger an output of false,
         // except for when srcJ+width > src[i].length or dstJ+width>dst[i].length (for each i).
         // This case is handled by calling the copyRange() method, which will return false
         // if the array is too short
         if (height < 0 || width < 0 || srcI < 0 || srcJ < 0 || dstI < 0 || dstJ < 0
-                || srcI + height > src.length || dstI + height > dst.length) {
+                || srcI + height > src.length
+                || dstI + height > dst.length) {
             return false;
         }
 
         //copy range into a temporary 2D array
         int[][] temp2DArray = new int[height][width];
+        /*
+        Loop invariant:
+        for each k in range [0,i),
+        temp2DArray[k][0...width-1] == src[srcI+k][srcJ...srcJ+width-1]
+         */
         for (int i = 0; i < height; i++) {
             if (!copyRange(src[srcI + i], srcJ, temp2DArray[i], 0, width)) {
                 return false;
@@ -138,6 +134,11 @@ public class ArrayUtilities {
         }
 
         //copy temporary range into dst array
+        /*
+        Loop invariant:
+        for each k in range [0 , i),
+        dst[dstI + k][dstJ ... dstJ + width - 1] == temp2DArray[k][0 ... width - 1]
+         */
         for (int i = 0; i < height; i++) {
             if (!copyRange(temp2DArray[i], 0, dst[i + dstI], dstJ, width)) {
                 return false;
