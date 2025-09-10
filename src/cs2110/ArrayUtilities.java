@@ -125,22 +125,21 @@ public class ArrayUtilities {
         // This case is handled by calling the copyRange() method, which will return false
         // if the array is too short
         if (height < 0 || width < 0 || srcI < 0 || srcJ < 0 || dstI < 0 || dstJ < 0
-                || srcI + height > src.length
-                || dstI + height > dst.length) {
+                || srcI + height > src.length || dstI + height > dst.length) {
             return false;
         }
 
         //copy range into a temporary 2D array
         int[][] temp2DArray = new int[height][width];
         for (int i = 0; i < height; i++) {
-            if(!copyRange(src[srcI+i], srcJ, temp2DArray[i], 0, width)){
+            if (!copyRange(src[srcI + i], srcJ, temp2DArray[i], 0, width)) {
                 return false;
             }
         }
 
         //copy temporary range into dst array
-        for(int i = 0; i<height;i++){
-            if(!copyRange(temp2DArray[i], 0, dst[i+dstI], dstJ, width)){
+        for (int i = 0; i < height; i++) {
+            if (!copyRange(temp2DArray[i], 0, dst[i + dstI], dstJ, width)) {
                 return false;
             }
         }

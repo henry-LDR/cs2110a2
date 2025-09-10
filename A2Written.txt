@@ -7,11 +7,27 @@ with no side effects.
 2. Did you define the method all at once and then debug with the tests,
 or did you break down your definition into multiple stages with intermittent testing?
 We defined the method all at once and then debugged with tests because the method was
-relatively straightforward to implement. As a result, we did not see the need to use the test cases
-in our initial prototype o
+relatively straightforward to implement. As a result, we did not see the need to use the test
+cases in our initial prototype, but rather followed a test-drive approach to debugging and
+finalizing our methods, as described previously.
 
 3. Did you need to modify or add to your unit test suite as you were defining copyRange()?
+We needed to modify and add to our unit test suite while defining copyRange(). While defining
+copyRange(), we encountered edge cases such as src and dst being the same array, and if
+src and dst overlapped, which required additional test cases to ensure that our method was able to
+catch such edge cases and avoid breaking then.
 
 4. What aspects of your test-driven development process worked well?
+Our test-driven development process worked well in ensuring that we were able to catch various
+edge cases and enforcing a robust method implementation that wouldn't break when faced with strange
+cases. We were able to continuously improve our method and check for errors by adding more
+and more tests and retesting every time to ensure that the method would work with our changes.
 
 5. What aspects of your test-driven development process do you want to change?
+One aspect we'd like to see changed is the lack of direction when it comes to initially implementing
+the method. We felt that when we first began to implement the method, it was slightly confusing
+because there was a lack of clear direction or roadmapping on how to create the method and the
+test cases could only be used after we created a working prototype for the method. While the methods
+to implement were relatively straightforward for this project, if we were asked to create a more
+advanced method, we feel that only using tests could make it difficult for us to get our
+wings off of the ground.
