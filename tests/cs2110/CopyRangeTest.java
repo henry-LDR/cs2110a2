@@ -289,6 +289,10 @@ public class CopyRangeTest {
         // Case 3: both source and destination are empty, length = 0
         assertFalse(ArrayUtilities.copyRange(emptySrc, 0, emptyDst, 0, 5),
                 "Copying nonzero elements between two empty arrays should fail and return false");
+
+        assertFalse(ArrayUtilities.copyRange(emptySrc, -1, emptyDst, -1, 1),
+                "Should retun false");
+
     }
 }
 
